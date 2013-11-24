@@ -33,12 +33,15 @@ createFunctions().forEach(function (element) { console.log(element()); }); // Pr
 function createFunctions2(){
     var result = new Array();
     for (var i=0; i < 10; i++){
-        result[i] = function(num){
+        result[i] = function(num){ //start of closure
+            var inside1=1;
             return function(){
+                var inside2=2;
                 return num;
             };
         }(i);
     }
     return result;
 }
-createFunctions2().forEach(function (element) { console.log(element()); }); // Prints correct 1 2 3..10
+var abc=new createFunctions2();
+abc.forEach(function (element) { console.log(element()); }); // Prints correct 1 2 3..10

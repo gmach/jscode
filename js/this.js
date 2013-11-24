@@ -4,7 +4,7 @@ window.color = "red";
 var o = { color: "blue" };
 
 function sayColor(){
-    alert(this.color);
+    console.log(this.color);
 }
 
 sayColor(); //”red”
@@ -22,7 +22,7 @@ window.color = "red";
 var o = { color: "blue" };
 
 function sayColor(){
-    alert(this.color);
+    console.log(this.color);
 }
 
 sayColor(); //red 
@@ -32,3 +32,33 @@ sayColor.call(o); //blue
 
 var objectSayColor = sayColor.bind(o);  //The bind() method creates a new function instance whose this value is bound to the value that was passed into bind().
 objectSayColor(); //blue
+
+
+// Anonymous functions are not bound to an object in this context, meaning the this object points to window
+var name = "The Window";
+var object = {
+    name : "My Object",
+    getNameFunc : function(){
+        var that = this;
+        return function() { //this is the anonymous function and closure
+            return that.name;
+        };
+    }
+};
+console.log(object.getNameFunc()()); //"My Object"
+
+
+var person = {
+    firstName   :"Penelope",
+    lastName    :"Barrymore",
+    showFullName:function () {
+        // "this" on the line below refers to the person object, because the showFullName function will be invoked by person object.
+        console.log (this.firstName + " " + this.lastName);
+    }
+}
+
+person.showFullName (); // Peter Ally
+
+// jQuery library binds $(this) to the object that invokes the click method. Therefore, $(this) will have the value of the jQuery button ($(“button”)). 
+// If callbackmethod is defined in user object eg var user = { callbackmethod: function(){ this.abc = 123; }};
+ $("button").click (callbackmethod.bind (user)); 
